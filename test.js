@@ -7,7 +7,7 @@ const { addSectionNumber } = plugin.testing
 const ALL_TESTS = [testSimple, testNested]
 
 function testAddSectionNum(input, output) {
-  assert.deepStrictEqual(addSectionNumber(input), output)
+  assert.deepStrictEqual(addSectionNumber(input, [0, 0, 0], '  '), output)
 }
 
 function testSimple() {

@@ -23,11 +23,15 @@ function addSectionNumber(lines, section, indent) {
     return lines
   }
 
-  const [line, ...rest] = lines
-  const [part, subpart, subsubpart] = section
+  const line = lines[0]
+  const rest = lines.slice(1)
+
+  const part = section[0]
+  const subpart = section[1]
+  const subsubpart = section[2]
 
   if (!isLink(line)) {
-    return [line, ...addSectionNumber(rest, section, indent)]
+    return [line].concat(addSectionNumber(rest, section, indent))
   }
 
   const [before, after] = line.split('[')
@@ -36,16 +40,17 @@ function addSectionNumber(lines, section, indent) {
   // we can't tell ahead of time whether the next link is nested.
   if (isSubsubpart(line, indent)) {
     const newLine = `${before}[${part}.${subpart}.${subsubpart + 1} ${after}`
-    return [
-      newLine,
-      ...addSectionNumber(rest, [part, subpart, subsubpart + 1], indent),
-    ]
+    return [newLine].concat(
+      addSectionNumber(rest, [part, subpart, subsubpart + 1], indent),
+    )
   } else if (isSubpart(line, indent)) {
     const newLine = `${before}[${part}.${subpart + 1} ${after}`
-    return [newLine, ...addSectionNumber(rest, [part, subpart + 1, 0], indent)]
+    return [newLine].concat(
+      addSectionNumber(rest, [part, subpart + 1, 0], indent),
+    )
   } else {
     const newLine = `${before}[${part + 1}. ${after}`
-    return [newLine, ...addSectionNumber(rest, [part + 1, 0, 0], indent)]
+    return [newLine].concat(addSectionNumber(rest, [part + 1, 0, 0], indent))
   }
 }
 
