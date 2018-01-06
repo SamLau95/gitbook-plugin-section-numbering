@@ -34,7 +34,8 @@ function addSectionNumber(lines, section, indent) {
     return [line].concat(addSectionNumber(rest, section, indent))
   }
 
-  const [before, after] = line.split('[')
+  const before = line.split('[')[0]
+  const after = line.split('[')[1]
 
   // We only increment the numbering for a section *after* the recursion since
   // we can't tell ahead of time whether the next link is nested.
