@@ -1,6 +1,9 @@
+// Log node version to help debug
+console.log(process.version)
+
 const fs = require('fs')
 
-const readSummary = (filepath) =>
+const readSummary = filepath =>
   fs
     .readFileSync(filepath, { encoding: 'utf8' })
     .trim()
@@ -15,7 +18,7 @@ const isSubsubpart = (line, indent) => line.startsWith(`${indent}${indent}`)
 
 // To my knowledge, Gitbook disallows nesting more than 2 levels deep which is
 // why the section is a hard-coded 3-tuple of [part, subpart, subsubpart].
-function addSectionNumber(lines, section=[0, 0, 0], indent='  ') {
+function addSectionNumber(lines, section = [0, 0, 0], indent = '  ') {
   if (lines.length === 0) {
     return lines
   }
@@ -33,7 +36,10 @@ function addSectionNumber(lines, section=[0, 0, 0], indent='  ') {
   // we can't tell ahead of time whether the next link is nested.
   if (isSubsubpart(line, indent)) {
     const newLine = `${before}[${part}.${subpart}.${subsubpart + 1} ${after}`
-    return [newLine, ...addSectionNumber(rest, [part, subpart, subsubpart + 1], indent)]
+    return [
+      newLine,
+      ...addSectionNumber(rest, [part, subpart, subsubpart + 1], indent),
+    ]
   } else if (isSubpart(line, indent)) {
     const newLine = `${before}[${part}.${subpart + 1} ${after}`
     return [newLine, ...addSectionNumber(rest, [part, subpart + 1, 0], indent)]
