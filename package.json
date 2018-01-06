@@ -3,6 +3,14 @@
   "version": "2.0.0",
   "description": "Automatically number each section in Gitbook sidebar",
   "main": "index.js",
+  "engines": {
+    "gitbook": ">=3.0.0"
+  },
+  "keywords": [
+    "gitbook",
+    "gitbook-plugin",
+    "gitbook-plugin-section-numbering",
+  ],
   "author": "Sam Lau <samlau95@gmail.com>",
   "license": "MIT",
   "repository": {
