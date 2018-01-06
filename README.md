@@ -1,4 +1,6 @@
-# Automatic Section Numbering in Gitbook Sidebar
+# [WIP] Automatic Section Numbering in Gitbook Sidebar
+
+**Note that this plugin is a work in progress and won't behave as expected.**
 
 This plugin will take a `SUMMARY.md` that you've already written and add
 section numbers in the generated Gitbook's sidebar.
