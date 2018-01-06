@@ -1,0 +1,12 @@
+{
+  "name": "gitbook-plugin-section-numbering",
+  "version": "1.0.0",
+  "description": "Automatically number each section in Gitbook sidebar",
+  "main": "index.js",
+  "author": "Sam Lau <samlau95@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamLau95/gitbook-plugin-section-numbering.git"
+  },
+}
