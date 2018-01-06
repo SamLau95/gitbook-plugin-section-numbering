@@ -9,30 +9,37 @@ const writeSummary = lines =>
   fs.writeFileSync('NEW_SUMMARY.md', str.join('\n'))
 
 const isLink = line => /^\s*(\*|-|\+)/.test(line)
-const isSubsection = line => /^\s+/.test(line)
 
-function addSectionNumber(lines, section = 1, subsection = 1) {
+const isSubpart = (line, indent) => line.startsWith(indent)
+const isSubsubpart = (line, indent) => line.startsWith(`${indent}${indent}`)
+
+// To my knowledge, Gitbook disallows nesting more than 2 levels deep which is
+// why the section is a hard-coded 3-tuple of [part, subpart, subsubpart].
+function addSectionNumber(lines, section=[0, 0, 0], indent='  ') {
   if (lines.length === 0) {
     return lines
   }
 
   const [line, ...rest] = lines
+  const [part, subpart, subsubpart] = section
 
   if (!isLink(line)) {
-    return [line, ...addSectionNumber(rest, section, subsection)]
+    return [line, ...addSectionNumber(rest, section, indent)]
   }
 
   const [before, after] = line.split('[')
 
-  if (isSubsection(line)) {
-    // If we recursed into a subsection we've just incremented the section
-    // number after parsing the previous section, so we decrement it by one to
-    // avoid an off-by-one error.
-    const newLine = `${before}[${section - 1}.${subsection} ${after}`
-    return [newLine, ...addSectionNumber(rest, section, subsection + 1)]
+  // We only increment the numbering for a section *after* the recursion since
+  // we can't tell ahead of time whether the next link is nested.
+  if (isSubsubpart(line, indent)) {
+    const newLine = `${before}[${part}.${subpart}.${subsubpart + 1} ${after}`
+    return [newLine, ...addSectionNumber(rest, [part, subpart, subsubpart + 1], indent)]
+  } else if (isSubpart(line, indent)) {
+    const newLine = `${before}[${part}.${subpart + 1} ${after}`
+    return [newLine, ...addSectionNumber(rest, [part, subpart + 1, 0], indent)]
   } else {
-    const newLine = `${before}[${section}. ${after}`
-    return [newLine, ...addSectionNumber(rest, section + 1, 1)]
+    const newLine = `${before}[${part + 1}. ${after}`
+    return [newLine, ...addSectionNumber(rest, [part + 1, 0, 0], indent)]
   }
 }
 
