@@ -1,12 +1,12 @@
 const fs = require('fs')
 
-const readSummary = () =>
+const readSummary = (filepath) =>
   fs
-    .readFileSync('SUMMARY.md', { encoding: 'utf8' })
+    .readFileSync(filepath, { encoding: 'utf8' })
     .trim()
     .split('\n')
-const writeSummary = lines =>
-  fs.writeFileSync('NEW_SUMMARY.md', str.join('\n'))
+const writeSummary = (filepath, lines) =>
+  fs.writeFileSync(filepath, str.join('\n'))
 
 const isLink = line => /^\s*(\*|-|\+)/.test(line)
 
@@ -46,9 +46,13 @@ function addSectionNumber(lines, section=[0, 0, 0], indent='  ') {
 module.exports = {
   hooks: {
     init: () => {
-      const lines = readSummary()
+      const root = this.resolve('')
+      const summaryFilename = this.config.get('structure.summary')
+      const filepath = `${root}/${summaryFilename}`
+
+      const lines = readSummary(filepath)
       const linesWithSection = addSectionNumber(lines)
-      writeSummary(linesWithSection)
+      writeSummary(filepath, linesWithSection)
     },
   },
 
