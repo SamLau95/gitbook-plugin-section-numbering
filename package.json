@@ -1,6 +1,6 @@
 {
   "name": "gitbook-plugin-section-numbering",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Automatically number each section in Gitbook sidebar",
   "main": "index.js",
   "scripts": {
