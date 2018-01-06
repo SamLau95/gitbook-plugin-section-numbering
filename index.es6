@@ -59,6 +59,9 @@ module.exports = {
       const lines = readSummary(filepath)
       const linesWithSection = addSectionNumber(lines)
       writeSummary(filepath, linesWithSection)
+
+      // Log output summary for debugging
+      console.log(readSummary(filepath));
     },
   },
 
