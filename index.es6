@@ -9,7 +9,7 @@ const readSummary = filepath =>
     .trim()
     .split('\n')
 const writeSummary = (filepath, lines) =>
-  fs.writeFileSync(filepath, str.join('\n'))
+  fs.writeFileSync(filepath, lines.join('\n'))
 
 const isLink = line => /^\s*(\*|-|\+)/.test(line)
 

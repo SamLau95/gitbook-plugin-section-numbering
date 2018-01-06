@@ -15,7 +15,7 @@ var readSummary = function readSummary(filepath) {
   return fs.readFileSync(filepath, { encoding: 'utf8' }).trim().split('\n');
 };
 var writeSummary = function writeSummary(filepath, lines) {
-  return fs.writeFileSync(filepath, str.join('\n'));
+  return fs.writeFileSync(filepath, lines.join('\n'));
 };
 
 var isLink = function isLink(line) {
