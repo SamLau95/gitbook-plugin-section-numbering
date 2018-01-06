@@ -1,4 +1,4 @@
-// Log node version to help
+// Log node version to help debug
 console.log(process.version)
 
 const fs = require('fs')
@@ -51,7 +51,7 @@ function addSectionNumber(lines, section = [0, 0, 0], indent = '  ') {
 
 module.exports = {
   hooks: {
-    init: () => {
+    init: function init() {
       const root = this.resolve('')
       const summaryFilename = this.config.get('structure.summary')
       const filepath = `${root}/${summaryFilename}`

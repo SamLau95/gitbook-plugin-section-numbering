@@ -6,7 +6,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
-// Log node version to help
+// Log node version to help debug
 console.log(process.version);
 
 var fs = require('fs');
@@ -77,8 +77,8 @@ function addSectionNumber(lines) {
 module.exports = {
   hooks: {
     init: function init() {
-      var root = undefined.resolve('');
-      var summaryFilename = undefined.config.get('structure.summary');
+      var root = this.resolve('');
+      var summaryFilename = this.config.get('structure.summary');
       var filepath = root + '/' + summaryFilename;
 
       var lines = readSummary(filepath);
