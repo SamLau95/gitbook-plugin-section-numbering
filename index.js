@@ -18,7 +18,7 @@ const isSubsubpart = (line, indent) => line.startsWith(`${indent}${indent}`)
 
 // To my knowledge, Gitbook disallows nesting more than 2 levels deep which is
 // why the section is a hard-coded 3-tuple of [part, subpart, subsubpart].
-function addSectionNumber(lines, section = [0, 0, 0], indent = '  ') {
+function addSectionNumber(lines, section, indent) {
   if (lines.length === 0) {
     return lines
   }
@@ -57,7 +57,7 @@ module.exports = {
       const filepath = `${root}/${summaryFilename}`
 
       const lines = readSummary(filepath)
-      const linesWithSection = addSectionNumber(lines)
+      const linesWithSection = addSectionNumber(lines, [0, 0, 0], '  ')
       writeSummary(filepath, linesWithSection)
     },
   },
